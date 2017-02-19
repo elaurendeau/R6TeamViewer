@@ -5,29 +5,23 @@ import (
 )
 
 
-//Process is the type of a function that takes a string as an argument and returns a structure
-type Process func(string) struct{}
+//ProcessData is the type of a function that takes a struct as an argument and returns a structure
+type ProcessData func(struct{}) struct{}
 
-//Process is a function that takes a slice of string and a function. It will apply the function to each string and return a slice of struct {}
-func Process(dataSlice []string, f Process) []struct{} {
+//Process is a function that takes a slice of struct{} and a function. It will apply the function to each string and return a slice of struct {}
+func Process(dataSlice []struct{}, f ProcessData) <-chan struct{} {
 
 	in := groupData(dataSlice)
 
-	out1 := split(in)
-	out2 := split(in)
-	out3 := split(in)
+	out1 := split(in, f)
+	out2 := split(in, f)
+	out3 := split(in, f)
 
-	resultDataSlice := make([]struct{}, 0)
-
-	for i := range merge(out1, out2, out3) {
-		resultDataSlice = append(resultDataSlice, i)
-	}
-
-	return resultDataSlice
+	return merge(out1, out2, out3)
 }
 
-func groupData(dataSlice []string) <-chan interface{} {
-	out := make(chan interface{})
+func groupData(dataSlice []struct{}) <-chan struct{} {
+	out := make(chan struct{})
 
 	go func() {
 		defer close(out)
@@ -39,12 +33,12 @@ func groupData(dataSlice []string) <-chan interface{} {
 	return out
 }
 
-func split(in <- chan interface{}) <- chan interface{} {
-	out := make(chan interface{})
+func split(in <- chan struct{}, f ProcessData) <- chan struct{} {
+	out := make(chan struct{})
 
 	go func() {
 		for data := range in {
-			out <- data
+			out <- f(data)
 		}
 
 		close(out)
@@ -53,11 +47,11 @@ func split(in <- chan interface{}) <- chan interface{} {
 	return out
 }
 
-func merge(in  ...<- chan interface{}) <- chan interface{} {
-	out := make(chan interface{})
+func merge(in  ...<- chan struct{}) <- chan struct{} {
+	out := make(chan struct{})
 	var wg sync.WaitGroup
 
-	output := func(channel <- chan interface{}) () {
+	output := func(channel <- chan struct{}) () {
 		for data := range channel {
 			out <- data
 		}
