@@ -5,11 +5,9 @@ import (
 )
 
 
-//ProcessData is the type of a function that takes a struct as an argument and returns a structure
-type ProcessData func(struct{}) struct{}
 
-//Process is a function that takes a slice of struct{} and a function. It will apply the function to each string and return a slice of struct {}
-func Process(dataSlice []struct{}, f ProcessData) <-chan struct{} {
+//Process is a function that takes a slice of interface{} and a function. It will apply the function to each string and return a slice of struct {}
+func Process(dataSlice []interface{}, f func(interface{}) interface{}) <-chan interface{} {
 
 	in := groupData(dataSlice)
 
@@ -20,8 +18,8 @@ func Process(dataSlice []struct{}, f ProcessData) <-chan struct{} {
 	return merge(out1, out2, out3)
 }
 
-func groupData(dataSlice []struct{}) <-chan struct{} {
-	out := make(chan struct{})
+func groupData(dataSlice []interface{}) <-chan interface{} {
+	out := make(chan interface{})
 
 	go func() {
 		defer close(out)
@@ -33,8 +31,8 @@ func groupData(dataSlice []struct{}) <-chan struct{} {
 	return out
 }
 
-func split(in <- chan struct{}, f ProcessData) <- chan struct{} {
-	out := make(chan struct{})
+func split(in <- chan interface{}, f func(interface{}) interface{}) <- chan interface{} {
+	out := make(chan interface{})
 
 	go func() {
 		for data := range in {
@@ -47,11 +45,11 @@ func split(in <- chan struct{}, f ProcessData) <- chan struct{} {
 	return out
 }
 
-func merge(in  ...<- chan struct{}) <- chan struct{} {
-	out := make(chan struct{})
+func merge(in  ...<- chan interface{}) <- chan interface{} {
+	out := make(chan interface{})
 	var wg sync.WaitGroup
 
-	output := func(channel <- chan struct{}) () {
+	output := func(channel <- chan interface{}) () {
 		for data := range channel {
 			out <- data
 		}
