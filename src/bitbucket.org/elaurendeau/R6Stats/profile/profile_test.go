@@ -4,7 +4,7 @@ import "testing"
 
 func Test_process_valid(*testing.T) {
 
-	_, err := Process(Request{Name: "test", Platform: "uplay"})
+	_, err := Process(Request{Name: "minthok", Platform: "uplay"})
 
 	if err != nil  {
 		panic("Expected result shouldn't have an err")
