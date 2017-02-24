@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 )
 
-func getSeasons(request Request) (<-chan Seasons, error) {
+func getSeasons(request Request) (<-chan Seasons, <-chan error) {
 	seasonIn := make(chan string)
 	go func() {
 		seasonIn <- fmt.Sprintf(seasonsURL, request.Name, request.Platform)
@@ -16,11 +16,10 @@ func getSeasons(request Request) (<-chan Seasons, error) {
 	return getSeasonsHttp(seasonIn)
 }
 
-func getSeasonsHttp(channel <-chan string) (<-chan Seasons, error) {
+func getSeasonsHttp(channel <-chan string) (<-chan Seasons, <-chan error) {
 
 	out := make(chan Seasons)
-
-	var err error
+	err := make(chan error)
 
 	go func() {
 		for url := range channel {
@@ -29,17 +28,18 @@ func getSeasonsHttp(channel <-chan string) (<-chan Seasons, error) {
 			}
 
 			resp, httpError := client.Get(url)
-			err = httpError
+			err <- httpError
 
 			defer resp.Body.Close()
 
 			seasons := Seasons{}
 
-			json.NewDecoder(resp.Body).Decode(seasons)
+			json.NewDecoder(resp.Body).Decode(&seasons)
 
 			out <- seasons
 		}
 
+		close(err)
 		close(out)
 	}()
 

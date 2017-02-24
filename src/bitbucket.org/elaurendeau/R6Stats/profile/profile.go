@@ -5,6 +5,7 @@ import (
 	"errors"
 	"bitbucket.org/elaurendeau/R6Stats/utils"
 	"time"
+	"sync"
 )
 
 
@@ -32,21 +33,31 @@ func Process(request Request) (UserProfile, error) {
 	fmt.Println("Processing ", request.Name)
 	userProfile := UserProfile{Name: request.Name, Platform: request.Platform}
 
+	var wg sync.WaitGroup
+	var globalError error
 	if !utils.Contains(PlayformList, request.Platform)  {
 		return UserProfile{}, errors.New("Invalid platform")
 	}
 
-	seasonsOut, err := getSeasons(request)
+	seasonsOut, errorChannel := getSeasons(request)
 
-	if err != nil {
-		return UserProfile{}, err
-	}
+	wg.Add(1)
+	go func() {
+		for errorChannel := range errorChannel {
+			globalError = errorChannel
+		}
+		wg.Done()
+	}()
 
-	userProfile.Seasons = <-seasonsOut
+	wg.Add(1)
+	go func() {
+		userProfile.Seasons = <-seasonsOut
+		wg.Done()
+	}()
 
-	fmt.Println(userProfile.Seasons.Seasons.Num4.Ncsa.Wins)
+	wg.Wait()
 
 	fmt.Println("Hi ", userProfile)
 
-	return userProfile, nil
+	return userProfile, globalError
 }
