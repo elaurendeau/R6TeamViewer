@@ -6,17 +6,17 @@ import (
 	"bitbucket.org/elaurendeau/R6Stats/utils"
 	"time"
 	"sync"
+	"net/http"
 )
 
 
-var PlayformList = []string{"uplay", "xbox", "ps4"}
+var platformList = []string{"uplay", "xbox", "ps4"}
 
 const seasonsURL string = "https://api.r6stats.com/api/v1/players/%v/seasons?platform=%v"
 const profileURL string = "https://api.r6stats.com/api/v1/players/%v?platform=%v"
 const operatorsURL string = "https://api.r6stats.com/api/v1/players/%v/operators?platform=%v"
 
 const httpTimeout = time.Duration(5 * time.Second)
-
 
 type Request struct {
 	Name string
@@ -35,11 +35,11 @@ func Process(request Request) (UserProfile, error) {
 
 	var wg sync.WaitGroup
 	var globalError error
-	if !utils.Contains(PlayformList, request.Platform)  {
+	if !utils.Contains(platformList, request.Platform)  {
 		return UserProfile{}, errors.New("Invalid platform")
 	}
 
-	seasonsOut, errorChannel := getSeasons(request)
+	seasonsOut, errorChannel := request.getSeasons()
 
 	wg.Add(1)
 	go func() {
@@ -60,4 +60,8 @@ func Process(request Request) (UserProfile, error) {
 	fmt.Println("Hi ", userProfile)
 
 	return userProfile, globalError
+}
+
+type HttpFetcher interface {
+	get(url string) (resp *http.Response, err error)
 }

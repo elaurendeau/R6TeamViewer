@@ -6,9 +6,10 @@ import (
 	"encoding/json"
 )
 
-func getSeasons(request Request) (<-chan Seasons, <-chan error) {
+func (request Request) getSeasons() (<-chan Seasons, <-chan error) {
 	seasonIn := make(chan string)
 	go func() {
+		fmt.Println("API URL ", fmt.Sprintf(seasonsURL, request.Name, request.Platform))
 		seasonIn <- fmt.Sprintf(seasonsURL, request.Name, request.Platform)
 		close(seasonIn)
 	}()
