@@ -3,7 +3,7 @@ package profile
 import (
 	"fmt"
 	"errors"
-	"bitbucket.org/elaurendeau/R6Stats/utils"
+	"bitbucket.org/elaurendeau/R6Stats/v1/utils"
 	"time"
 	"sync"
 	"net/http"

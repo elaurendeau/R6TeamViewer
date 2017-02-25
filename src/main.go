@@ -1,24 +1,39 @@
 package main
 
 import (
-	"./bitbucket.org/elaurendeau/R6Stats/parallel"
-	"./bitbucket.org/elaurendeau/R6Stats/stats"
 	"fmt"
 )
 
+type Mutatable struct {
+	a int
+	b int
+	name test
+}
+
+type test struct {
+	name string
+}
+
+func (m Mutatable) StayTheSame(n1 int, n2 int) {
+	m.a = n1
+	m.b = n2
+}
+
+func (m *Mutatable) Mutate(n1 int, n2 int) {
+	m.a = n1
+	m.b = n2
+}
+func (m *Mutatable) Mutate1(test test) {
+	m.name = test
+}
+
 func main() {
-
-	users := make([]interface{}, 0)
-
-	users = append(users, stats.Request{Name: "minthok", Platform: "uplay"})
-	users = append(users, stats.Request{Name: "FGET-rafoufoun", Platform: "uplay"})
-	users = append(users, stats.Request{Name: "sam-com", Platform: "uplay"})
-	users = append(users, stats.Request{Name: "bearink", Platform: "uplay"})
-
-	for data := range parallel.Process(users, stats.GetUserData) {
-		fmt.Println("Hola this is a start")
-		fmt.Println(data)
-		fmt.Println("Hola this is an end")
-	}
-
+	m := &Mutatable{0, 0, test{name: "aaa"}}
+	fmt.Println(m)
+	m.StayTheSame(5,7)
+	fmt.Println(m)
+	m.Mutate(6,8)
+	fmt.Println(m)
+	m.Mutate1(test{name: "bob"})
+	fmt.Println(m)
 }
