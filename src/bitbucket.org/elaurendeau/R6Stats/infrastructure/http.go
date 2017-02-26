@@ -11,7 +11,7 @@ type HttpHandler struct {
 	HttpTimeout time.Duration
 }
 
-const defaultHttpTimeout time.Duration = 5
+const defaultHttpTimeout time.Duration = 30
 
 func (httpHandler *HttpHandler) Get(url string) (interfaces.HttpContent, error)  {
 
