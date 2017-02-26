@@ -26,3 +26,7 @@ type Operators struct {
 		} `json:"operator"`
 	} `json:"operator_records"`
 }
+
+type OperatorRepository interface {
+	FindByProfileNameAndPlatform(profileName string, platform string) (*Operators, error)
+}

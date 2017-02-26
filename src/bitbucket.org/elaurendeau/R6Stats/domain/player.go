@@ -51,4 +51,6 @@ type Player struct {
 	} `json:"player"`
 }
 
-
+type PlayerRepository interface {
+	FindByProfileNameAndPlatform(profileName string, platform string) (*Player, error)
+}

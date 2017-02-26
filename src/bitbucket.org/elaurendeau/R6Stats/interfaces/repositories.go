@@ -21,7 +21,7 @@ type OperatorRepository HttpRepository
 
 
 const seasonsURL string = "https://api.r6stats.com/api/v1/players/%v/seasons?platform=%v"
-const profileURL string = "https://api.r6stats.com/api/v1/players/%v?platform=%v"
+const playerURL string = "https://api.r6stats.com/api/v1/players/%v?platform=%v"
 const operatorsURL string = "https://api.r6stats.com/api/v1/players/%v/operators?platform=%v"
 
 const statusOK string = "200 OK"
@@ -45,4 +45,40 @@ func (seasonRepository *SeasonRepository) FindByProfileNameAndPlatform(profileNa
 	json.Unmarshal([]byte(httpContent.Content), seasons)
 
 	return seasons, nil
+}
+
+func (seasonRepository *OperatorRepository) FindByProfileNameAndPlatform(profileName string, platform string) (*domain.Operators, error) {
+
+	httpContent, err := seasonRepository.HttpHandler.Get(fmt.Sprintf(operatorsURL, profileName, platform))
+
+	if err != nil {
+		return nil, err
+	}
+
+	if httpContent.Status != statusOK || httpContent.StatusCode != statusCode200 {
+		return nil, errors.New(errorMessageInvalidStatus)
+	}
+
+	operators := new(domain.Operators)
+	json.Unmarshal([]byte(httpContent.Content), operators)
+
+	return operators, nil
+}
+
+func (seasonRepository *PlayerRepository) FindByProfileNameAndPlatform(profileName string, platform string) (*domain.Player, error) {
+
+	httpContent, err := seasonRepository.HttpHandler.Get(fmt.Sprintf(playerURL, profileName, platform))
+
+	if err != nil {
+		return nil, err
+	}
+
+	if httpContent.Status != statusOK || httpContent.StatusCode != statusCode200 {
+		return nil, errors.New(errorMessageInvalidStatus)
+	}
+
+	player := new(domain.Player)
+	json.Unmarshal([]byte(httpContent.Content), player)
+
+	return player, nil
 }
