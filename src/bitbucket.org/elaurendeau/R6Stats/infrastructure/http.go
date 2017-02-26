@@ -13,7 +13,7 @@ type HttpHandler struct {
 
 const defaultHttpTimeout time.Duration = 5
 
-func (httpHandler HttpHandler) get(url string) (interfaces.HttpContent, error)  {
+func (httpHandler *HttpHandler) Get(url string) (interfaces.HttpContent, error)  {
 
 	if httpHandler.HttpTimeout <= 0 {
 		httpHandler.HttpTimeout = defaultHttpTimeout
@@ -38,3 +38,6 @@ func (httpHandler HttpHandler) get(url string) (interfaces.HttpContent, error)  
 
 	return httpContent,err
 }
+
+
+//TODO POST

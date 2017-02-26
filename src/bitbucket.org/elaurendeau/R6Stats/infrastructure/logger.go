@@ -11,7 +11,8 @@ type Logger struct {
 
 const levelInfo string = "INFO"
 
-func (logger Logger) log(level string, message string) error {
+func (logger Logger) Log(level string, message string) error {
+
 	if level == levelInfo {
 		fmt.Println(message)
 		return nil

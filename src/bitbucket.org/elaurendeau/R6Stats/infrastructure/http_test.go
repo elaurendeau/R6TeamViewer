@@ -21,13 +21,15 @@ func TestValidHttpRequest(t *testing.T) {
 
 	handler := HttpHandler{}
 
-	httpContent, err := handler.get(ts.URL)
+	httpContent, err := handler.Get(ts.URL)
 	fmt.Println(ts.URL)
 
 	assert.Nil(t, err)
 
 	assert.Nil(t, err)
 	assert.Equal(t, expectedContent , httpContent.Content)
+	assert.Equal(t, "200 OK" , httpContent.Status)
+	assert.Equal(t, 200 , httpContent.StatusCode)
 
 }
 
@@ -35,7 +37,7 @@ func TestInvalidHttpRequest(t *testing.T) {
 
 	handler := HttpHandler{}
 
-	_, err := handler.get("")
+	_, err := handler.Get("")
 
 	assert.Error(t, err, "error is expected")
 }
@@ -54,7 +56,7 @@ func TestTimeoutHttpRequest(t *testing.T) {
 
 
 
-	_, err := handler.get(ts.URL)
+	_, err := handler.Get(ts.URL)
 
 	assert.NotNil(t, err)
 	assert.True(t, strings.Contains(err.Error(), "Client.Timeout exceeded while awaiting headers"))

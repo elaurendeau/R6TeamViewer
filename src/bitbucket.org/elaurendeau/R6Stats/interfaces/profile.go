@@ -1,20 +1,12 @@
 package interfaces
 
 import (
-	"bitbucket.org/elaurendeau/R6Stats/usecases"
 	"bitbucket.org/elaurendeau/R6Stats/domain"
-	"fmt"
+	"bitbucket.org/elaurendeau/R6Stats/usecases"
 )
 
 type ProfileInteractor interface {
-	FetchSeasons(request usecases.Request) (*domain.Seasons, error)
-}
-
-
-
-type HttpHandler struct {
-	ProfileInteractor ProfileInteractor
-
+	FetchSeasons(profileName string, platform string) (*domain.Profile, error)
 }
 
 type HttpContent struct {
@@ -23,23 +15,10 @@ type HttpContent struct {
 	Content string
 }
 
-func (handler HttpHandler) buildProfile(name string, platform string) (domain.Profile, error) {
-	request := usecases.Request{Name: name, Platform: platform}
-
-	profile := domain.Profile{Name: name, Platform: platform}
-	seasons, err := handler.ProfileInteractor.FetchSeasons(request)
-
-	if err != nil {
-		return domain.Profile{}, err
-	}
-
-	profile.Seasons = seasons
-
-	fmt.Println(profile)
-	return profile, nil
-
+type RequestHandler struct {
+	ProfileInteractor *usecases.ProfileInteractor
 }
 
-func (handler HttpHandler) getSeasons(url string) (*domain.Seasons, error) {
-	return new(domain.Seasons), nil
+func (RequestHandler *RequestHandler) FetchProfile(profileName string, platform string) (*domain.Profile, error) {
+	return RequestHandler.ProfileInteractor.FetchProfile(profileName, platform)
 }
