@@ -6,16 +6,11 @@ import (
 	"fmt"
 	"bitbucket.org/elaurendeau/R6Stats/infrastructure"
 	"time"
-	"math/big"
-	"sync"
 )
 
 func main() {
 
 	start := time.Now()
-
-	r := new(big.Int)
-	fmt.Println(r.Binomial(1000, 10))
 
 	requestHandler := interfaces.RequestHandler{}
 	profileInteractor := new(usecases.ProfileInteractor)
@@ -38,52 +33,34 @@ func main() {
 
 	requestHandler.UsecaseFetcher = profileInteractor
 
-	wg := sync.WaitGroup{}
+	var profileNameList = make([]string, 0)
 
-	queryAmount := 10
+	profileNameList = append(profileNameList, "free11355")
+	profileNameList = append(profileNameList, "Ralhem")
+	profileNameList = append(profileNameList, "BodyLord")
+	profileNameList = append(profileNameList, "QuodPrinceps")
+	profileNameList = append(profileNameList, "W33dPanda.cvs")
+	profileNameList = append(profileNameList, "Banzai.cvs")
+	profileNameList = append(profileNameList, "Wiski.cvs")
+	profileNameList = append(profileNameList, "Interitus.cvs")
+	profileNameList = append(profileNameList, "iDimHi")
+	profileNameList = append(profileNameList, "Bricks.IRON")
 
+	queryAmount := len(profileNameList)
 
-	timeChannel := make(chan time.Duration)
-	wg.Add(queryAmount)
+	profiles, err := requestHandler.FetchProfiles(profileNameList, "uplay")
 
-
-	for i := 0; i < queryAmount ; i++ {
-
-
-		go func(startTime time.Time, index int) {
-
-			_, err := requestHandler.FetchProfile("free11355", "uplay")
-			if err != nil {
-				fmt.Println(err)
-			}
-
-			timeChannel <- time.Since(startTime)
-			wg.Done()
-
-		}(time.Now(), i)
-	}
-
-	var totalSingleQuery time.Duration = 0
-	var longestSingleQuery time.Duration = 0
-
-	for i := 0; i < queryAmount; i++ {
-
-		currentDuration := <-timeChannel
-		totalSingleQuery += currentDuration
-
-		if currentDuration > longestSingleQuery {
-			longestSingleQuery = currentDuration
+	if err != nil {
+		fmt.Errorf("Error occured: ", err.Error())
+	} else {
+		for _, profile := range profiles {
+			fmt.Println(profile.Name, " ", profile)
 		}
 	}
 
-	wg.Wait()
-
-	close(timeChannel)
 
 	elapsed := time.Since(start)
 	fmt.Println("Total time ", elapsed)
-	fmt.Println("Total single time ", totalSingleQuery)
-	fmt.Println("Average profile time ", totalSingleQuery/time.Duration(queryAmount))
-	fmt.Println("Slowest profile time ", longestSingleQuery)
+	fmt.Println("Average profile time ", elapsed/time.Duration(queryAmount))
 
 }

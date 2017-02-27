@@ -48,3 +48,46 @@ func TestValidFetchProfile(t *testing.T) {
 
 	mockedProfileInteractor.AssertExpectations(t)
 }
+
+
+func TestValidFetchProfiles(t *testing.T) {
+
+	mockedProfileInteractor := new(MockedProfileInteractor)
+
+	requestHandler := new(RequestHandler)
+	requestHandler.UsecaseFetcher = mockedProfileInteractor
+
+	profileName := "profileName"
+	var profileNameList = make([]string, 0)
+
+	profileNameList = append(profileNameList, profileName)
+	profileNameList = append(profileNameList, profileName)
+	profileNameList = append(profileNameList, profileName)
+	profileNameList = append(profileNameList, profileName)
+	profileNameList = append(profileNameList, profileName)
+
+	platform := "platform"
+
+	expectedProfile := new(domain.Profile)
+	expectedProfile.Name = profileName
+	expectedProfile.Platform = platform
+
+	expectedProfiles := make([]*domain.Profile, len(profileNameList))
+
+	for i := range profileNameList {
+		fmt.Println(i)
+		expectedProfiles[i] = expectedProfile
+	}
+
+	mockedProfileInteractor.On("FetchProfile", profileName, platform).Return(expectedProfile, nil)
+
+	actualProfiles, err := requestHandler.FetchProfiles(profileNameList, "platform")
+
+	fmt.Println(actualProfiles)
+	fmt.Println(expectedProfile)
+
+	assert.Nil(t, err)
+	assert.Equal(t, expectedProfiles, actualProfiles)
+
+	mockedProfileInteractor.AssertExpectations(t)
+}
