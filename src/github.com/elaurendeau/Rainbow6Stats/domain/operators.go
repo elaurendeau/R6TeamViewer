@@ -1,7 +1,5 @@
 package domain
 
-import "fmt"
-
 //Operators is a struct used to describe an operator
 //It should contain the records of all operators.
 type Operators struct {
