@@ -13,7 +13,7 @@ type HttpContent struct {
 }
 
 type RequestHandler struct {
-	UsecaseFetcher usecases.UsecaseFetcher
+	UsecaseFetcher usecases.UseCaseFetcher
 }
 
 func (RequestHandler *RequestHandler) FetchProfile(profileName string, platform string) (*domain.Profile, error) {

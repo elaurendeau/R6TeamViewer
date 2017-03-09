@@ -7,12 +7,14 @@ import (
 	"time"
 )
 
+//HttpHandler is a struct used to handle http requests
 type HttpHandler struct {
 	HttpTimeout time.Duration
 }
 
 const defaultHttpTimeout time.Duration = 30
 
+//Get is called to perform an HTTP Get. Provide an URL and obtain a HttpContent and an error as the result.
 func (httpHandler *HttpHandler) Get(url string) (interfaces.HttpContent, error) {
 
 	if httpHandler.HttpTimeout <= 0 {
@@ -38,5 +40,3 @@ func (httpHandler *HttpHandler) Get(url string) (interfaces.HttpContent, error) 
 
 	return httpContent, err
 }
-
-//TODO POST

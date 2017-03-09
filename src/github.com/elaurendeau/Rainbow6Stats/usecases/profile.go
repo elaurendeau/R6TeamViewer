@@ -6,11 +6,13 @@ import (
 	"sync"
 )
 
+//Logger interface for a simple logger
 type Logger interface {
+	//Log a message at a specific level
 	Log(level string, message string) error
 }
 
-type UsecaseFetcher interface {
+type UseCaseFetcher interface {
 	FetchProfile(profileName string, platform string) (*domain.Profile, error)
 }
 
