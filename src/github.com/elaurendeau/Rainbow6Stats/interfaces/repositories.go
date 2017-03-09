@@ -1,10 +1,10 @@
 package interfaces
 
 import (
-	"bitbucket.org/elaurendeau/R6Stats/domain"
-	"fmt"
-	"errors"
 	"encoding/json"
+	"errors"
+	"fmt"
+	"github.com/elaurendeau/Rainbow6Stats/domain"
 )
 
 type HttpHandler interface {
@@ -18,7 +18,6 @@ type HttpRepository struct {
 type SeasonRepository HttpRepository
 type PlayerRepository HttpRepository
 type OperatorRepository HttpRepository
-
 
 const seasonsURL string = "https://api.r6stats.com/api/v1/players/%v/seasons?platform=%v"
 const playerURL string = "https://api.r6stats.com/api/v1/players/%v?platform=%v"

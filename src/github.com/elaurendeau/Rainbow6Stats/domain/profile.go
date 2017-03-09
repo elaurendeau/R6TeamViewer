@@ -1,10 +1,10 @@
 package domain
 
 type Profile struct {
-	Name string
+	Name     string
 	Platform string
 
 	Operators *Operators
-	Player *Player
-	Seasons *Seasons
+	Player    *Player
+	Seasons   *Seasons
 }

@@ -1,15 +1,15 @@
 package interfaces
 
 import (
-	"bitbucket.org/elaurendeau/R6Stats/domain"
-	"bitbucket.org/elaurendeau/R6Stats/usecases"
 	"sync"
+	"github.com/elaurendeau/Rainbow6Stats/usecases"
+	"github.com/elaurendeau/Rainbow6Stats/domain"
 )
 
 type HttpContent struct {
-	Status string
+	Status     string
 	StatusCode int
-	Content string
+	Content    string
 }
 
 type RequestHandler struct {
@@ -22,7 +22,7 @@ func (RequestHandler *RequestHandler) FetchProfile(profileName string, platform 
 
 func (RequestHandler *RequestHandler) FetchProfiles(profileNames []string, platform string) ([]*domain.Profile, error) {
 
-	profiles := make([]*domain.Profile,  0)
+	profiles := make([]*domain.Profile, 0)
 	var globalErr error
 
 	errorChannel := make(chan error)

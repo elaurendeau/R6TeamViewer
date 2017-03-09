@@ -1,17 +1,16 @@
 package usecases
 
 import (
-	"testing"
-	"github.com/stretchr/testify/mock"
-	"bitbucket.org/elaurendeau/R6Stats/domain"
-	"reflect"
-	"fmt"
 	"encoding/json"
-	"strings"
-	"github.com/stretchr/testify/assert"
 	"errors"
+	"fmt"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
+	"reflect"
+	"strings"
+	"testing"
+	"github.com/elaurendeau/Rainbow6Stats/domain"
 )
-
 
 type MockedLogger struct {
 	mock.Mock
@@ -21,6 +20,7 @@ func (mockedLogger *MockedLogger) Log(level string, message string) error {
 	args := mockedLogger.Called(level, message)
 	return args.Error(0)
 }
+
 type MockedSeasonRepository struct {
 	mock.Mock
 }
@@ -33,6 +33,7 @@ func (mockedSeasonRepository *MockedSeasonRepository) FindByProfileNameAndPlatfo
 
 	return seasons, args.Error(1)
 }
+
 type MockedPlayerRepository struct {
 	mock.Mock
 }
@@ -45,6 +46,7 @@ func (mockedPlayerRepository *MockedPlayerRepository) FindByProfileNameAndPlatfo
 
 	return player, args.Error(1)
 }
+
 type MockedOperatorRepository struct {
 	mock.Mock
 }
@@ -76,7 +78,7 @@ func TestValidFetchProfile(t *testing.T) {
 	json.NewDecoder(strings.NewReader(jsonOperators)).Decode(operators)
 
 	expectedProfile := new(domain.Profile)
-	expectedProfile.Name =  profileName
+	expectedProfile.Name = profileName
 	expectedProfile.Platform = platform
 	expectedProfile.Seasons = seasons
 	expectedProfile.Operators = operators
@@ -95,9 +97,9 @@ func TestValidFetchProfile(t *testing.T) {
 	profileInteractor.OperatorRepository = mockedOperatorRepository
 
 	mockedLogger.On("Log", "INFO", fmt.Sprintf("Fetching profile %v on %v", profileName, platform)).Return(nil)
-	mockedSeasonRepository.On("FindByProfileNameAndPlatform",profileName, platform).Return(seasons, nil)
-	mockedPlayerRepository.On("FindByProfileNameAndPlatform",profileName, platform).Return(player, nil)
-	mockedOperatorRepository.On("FindByProfileNameAndPlatform",profileName, platform).Return(operators, nil)
+	mockedSeasonRepository.On("FindByProfileNameAndPlatform", profileName, platform).Return(seasons, nil)
+	mockedPlayerRepository.On("FindByProfileNameAndPlatform", profileName, platform).Return(player, nil)
+	mockedOperatorRepository.On("FindByProfileNameAndPlatform", profileName, platform).Return(operators, nil)
 
 	actualProfile, err := profileInteractor.FetchProfile(profileName, platform)
 
@@ -106,7 +108,6 @@ func TestValidFetchProfile(t *testing.T) {
 
 	mockedLogger.AssertExpectations(t)
 }
-
 
 func TestInvalidSeasonErrorFetchProfile(t *testing.T) {
 
@@ -126,7 +127,7 @@ func TestInvalidSeasonErrorFetchProfile(t *testing.T) {
 	json.NewDecoder(strings.NewReader(jsonOperators)).Decode(operators)
 
 	expectedProfile := new(domain.Profile)
-	expectedProfile.Name =  profileName
+	expectedProfile.Name = profileName
 	expectedProfile.Platform = platform
 	expectedProfile.Seasons = seasons
 	expectedProfile.Operators = operators
@@ -145,9 +146,9 @@ func TestInvalidSeasonErrorFetchProfile(t *testing.T) {
 	profileInteractor.OperatorRepository = mockedOperatorRepository
 
 	mockedLogger.On("Log", "INFO", fmt.Sprintf("Fetching profile %v on %v", profileName, platform)).Return(nil)
-	mockedSeasonRepository.On("FindByProfileNameAndPlatform",profileName, platform).Return(seasons, errors.New("Controlled error"))
-	mockedPlayerRepository.On("FindByProfileNameAndPlatform",profileName, platform).Return(player, nil)
-	mockedOperatorRepository.On("FindByProfileNameAndPlatform",profileName, platform).Return(operators, nil)
+	mockedSeasonRepository.On("FindByProfileNameAndPlatform", profileName, platform).Return(seasons, errors.New("Controlled error"))
+	mockedPlayerRepository.On("FindByProfileNameAndPlatform", profileName, platform).Return(player, nil)
+	mockedOperatorRepository.On("FindByProfileNameAndPlatform", profileName, platform).Return(operators, nil)
 
 	_, err := profileInteractor.FetchProfile(profileName, platform)
 
@@ -173,7 +174,7 @@ func TestInvalidPlayerErrorFetchProfile(t *testing.T) {
 	json.NewDecoder(strings.NewReader(jsonOperators)).Decode(operators)
 
 	expectedProfile := new(domain.Profile)
-	expectedProfile.Name =  profileName
+	expectedProfile.Name = profileName
 	expectedProfile.Platform = platform
 	expectedProfile.Seasons = seasons
 	expectedProfile.Operators = operators
@@ -192,9 +193,9 @@ func TestInvalidPlayerErrorFetchProfile(t *testing.T) {
 	profileInteractor.OperatorRepository = mockedOperatorRepository
 
 	mockedLogger.On("Log", "INFO", fmt.Sprintf("Fetching profile %v on %v", profileName, platform)).Return(nil)
-	mockedSeasonRepository.On("FindByProfileNameAndPlatform",profileName, platform).Return(seasons, nil)
-	mockedPlayerRepository.On("FindByProfileNameAndPlatform",profileName, platform).Return(player, errors.New("Controlled error"))
-	mockedOperatorRepository.On("FindByProfileNameAndPlatform",profileName, platform).Return(operators, nil)
+	mockedSeasonRepository.On("FindByProfileNameAndPlatform", profileName, platform).Return(seasons, nil)
+	mockedPlayerRepository.On("FindByProfileNameAndPlatform", profileName, platform).Return(player, errors.New("Controlled error"))
+	mockedOperatorRepository.On("FindByProfileNameAndPlatform", profileName, platform).Return(operators, nil)
 
 	_, err := profileInteractor.FetchProfile(profileName, platform)
 
@@ -221,7 +222,7 @@ func TestInvalidOperatorErrorFetchProfile(t *testing.T) {
 	json.NewDecoder(strings.NewReader(jsonOperators)).Decode(operators)
 
 	expectedProfile := new(domain.Profile)
-	expectedProfile.Name =  profileName
+	expectedProfile.Name = profileName
 	expectedProfile.Platform = platform
 	expectedProfile.Seasons = seasons
 	expectedProfile.Operators = operators
@@ -240,9 +241,9 @@ func TestInvalidOperatorErrorFetchProfile(t *testing.T) {
 	profileInteractor.OperatorRepository = mockedOperatorRepository
 
 	mockedLogger.On("Log", "INFO", fmt.Sprintf("Fetching profile %v on %v", profileName, platform)).Return(nil)
-	mockedSeasonRepository.On("FindByProfileNameAndPlatform",profileName, platform).Return(seasons, nil)
-	mockedPlayerRepository.On("FindByProfileNameAndPlatform",profileName, platform).Return(player, nil)
-	mockedOperatorRepository.On("FindByProfileNameAndPlatform",profileName, platform).Return(operators, errors.New("Controlled error"))
+	mockedSeasonRepository.On("FindByProfileNameAndPlatform", profileName, platform).Return(seasons, nil)
+	mockedPlayerRepository.On("FindByProfileNameAndPlatform", profileName, platform).Return(player, nil)
+	mockedOperatorRepository.On("FindByProfileNameAndPlatform", profileName, platform).Return(operators, errors.New("Controlled error"))
 
 	_, err := profileInteractor.FetchProfile(profileName, platform)
 

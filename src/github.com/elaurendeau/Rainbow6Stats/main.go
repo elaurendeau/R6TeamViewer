@@ -1,11 +1,11 @@
 package main
 
 import (
-	"bitbucket.org/elaurendeau/R6Stats/interfaces"
-	"bitbucket.org/elaurendeau/R6Stats/usecases"
 	"fmt"
-	"bitbucket.org/elaurendeau/R6Stats/infrastructure"
 	"time"
+	"github.com/elaurendeau/Rainbow6Stats/interfaces"
+	"github.com/elaurendeau/Rainbow6Stats/usecases"
+	"github.com/elaurendeau/Rainbow6Stats/infrastructure"
 )
 
 func main() {
@@ -57,7 +57,6 @@ func main() {
 			fmt.Println(profile.Name, " ", profile)
 		}
 	}
-
 
 	elapsed := time.Since(start)
 	fmt.Println("Total time ", elapsed)

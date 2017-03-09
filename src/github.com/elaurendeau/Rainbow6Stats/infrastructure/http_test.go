@@ -1,13 +1,13 @@
 package infrastructure
 
 import (
-	"testing"
-	"net/http"
-	"net/http/httptest"
 	"fmt"
 	"github.com/stretchr/testify/assert"
-	"time"
+	"net/http"
+	"net/http/httptest"
 	"strings"
+	"testing"
+	"time"
 )
 
 func TestValidHttpRequest(t *testing.T) {
@@ -27,9 +27,9 @@ func TestValidHttpRequest(t *testing.T) {
 	assert.Nil(t, err)
 
 	assert.Nil(t, err)
-	assert.Equal(t, expectedContent , httpContent.Content)
-	assert.Equal(t, "200 OK" , httpContent.Status)
-	assert.Equal(t, 200 , httpContent.StatusCode)
+	assert.Equal(t, expectedContent, httpContent.Content)
+	assert.Equal(t, "200 OK", httpContent.Status)
+	assert.Equal(t, 200, httpContent.StatusCode)
 
 }
 
@@ -42,7 +42,6 @@ func TestInvalidHttpRequest(t *testing.T) {
 	assert.Error(t, err, "error is expected")
 }
 
-
 func TestTimeoutHttpRequest(t *testing.T) {
 
 	expectedContent := "premade http body content"
@@ -54,13 +53,9 @@ func TestTimeoutHttpRequest(t *testing.T) {
 	}))
 	defer ts.Close()
 
-
-
 	_, err := handler.Get(ts.URL)
 
 	assert.NotNil(t, err)
 	assert.True(t, strings.Contains(err.Error(), "Client.Timeout exceeded while awaiting headers"))
 
-
 }
-

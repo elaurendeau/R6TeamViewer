@@ -1,15 +1,15 @@
 package interfaces
 
 import (
-	"testing"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"reflect"
-	"github.com/stretchr/testify/assert"
-	"fmt"
-	"bitbucket.org/elaurendeau/R6Stats/domain"
-	"encoding/json"
 	"strings"
-	"errors"
+	"testing"
+	"github.com/elaurendeau/Rainbow6Stats/domain"
 )
 
 type MockedRepositoryHttpHandler struct {

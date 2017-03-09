@@ -1,9 +1,9 @@
 package usecases
 
 import (
-	"bitbucket.org/elaurendeau/R6Stats/domain"
 	"fmt"
 	"sync"
+	"github.com/elaurendeau/Rainbow6Stats/domain"
 )
 
 type Logger interface {

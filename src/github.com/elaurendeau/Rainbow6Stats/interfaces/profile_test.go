@@ -1,12 +1,12 @@
 package interfaces
 
 import (
+	"fmt"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"bitbucket.org/elaurendeau/R6Stats/domain"
 	"reflect"
 	"testing"
-	"github.com/stretchr/testify/assert"
-	"fmt"
+	"github.com/elaurendeau/Rainbow6Stats/domain"
 )
 
 type MockedProfileInteractor struct {
@@ -48,7 +48,6 @@ func TestValidFetchProfile(t *testing.T) {
 
 	mockedProfileInteractor.AssertExpectations(t)
 }
-
 
 func TestValidFetchProfiles(t *testing.T) {
 

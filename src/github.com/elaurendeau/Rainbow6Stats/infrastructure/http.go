@@ -1,10 +1,10 @@
 package infrastructure
 
 import (
-	"time"
 	"io/ioutil"
-	"bitbucket.org/elaurendeau/R6Stats/interfaces"
 	"net/http"
+	"time"
+	"github.com/elaurendeau/Rainbow6Stats/interfaces"
 )
 
 type HttpHandler struct {
@@ -13,7 +13,7 @@ type HttpHandler struct {
 
 const defaultHttpTimeout time.Duration = 30
 
-func (httpHandler *HttpHandler) Get(url string) (interfaces.HttpContent, error)  {
+func (httpHandler *HttpHandler) Get(url string) (interfaces.HttpContent, error) {
 
 	if httpHandler.HttpTimeout <= 0 {
 		httpHandler.HttpTimeout = defaultHttpTimeout
@@ -25,7 +25,7 @@ func (httpHandler *HttpHandler) Get(url string) (interfaces.HttpContent, error) 
 		Timeout: timeout,
 	}
 
-	response,err := client.Get(url)
+	response, err := client.Get(url)
 
 	if err != nil {
 		return interfaces.HttpContent{}, err
@@ -33,11 +33,10 @@ func (httpHandler *HttpHandler) Get(url string) (interfaces.HttpContent, error) 
 
 	defer response.Body.Close()
 
-	actualContent, err :=  ioutil.ReadAll(response.Body)
+	actualContent, err := ioutil.ReadAll(response.Body)
 	httpContent := interfaces.HttpContent{Status: response.Status, StatusCode: response.StatusCode, Content: string(actualContent)}
 
-	return httpContent,err
+	return httpContent, err
 }
-
 
 //TODO POST

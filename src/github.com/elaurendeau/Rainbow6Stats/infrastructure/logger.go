@@ -1,12 +1,11 @@
 package infrastructure
 
 import (
-	"fmt"
 	"errors"
+	"fmt"
 )
 
 type Logger struct {
-
 }
 
 const levelInfo string = "INFO"
