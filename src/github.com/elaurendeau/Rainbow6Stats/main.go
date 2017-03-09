@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"github.com/elaurendeau/Rainbow6Stats/infrastructure"
 	"github.com/elaurendeau/Rainbow6Stats/interfaces"
 	"github.com/elaurendeau/Rainbow6Stats/usecases"
-	"github.com/elaurendeau/Rainbow6Stats/infrastructure"
+	"time"
 )
 
 func main() {

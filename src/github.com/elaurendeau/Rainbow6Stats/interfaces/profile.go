@@ -1,9 +1,9 @@
 package interfaces
 
 import (
-	"sync"
-	"github.com/elaurendeau/Rainbow6Stats/usecases"
 	"github.com/elaurendeau/Rainbow6Stats/domain"
+	"github.com/elaurendeau/Rainbow6Stats/usecases"
+	"sync"
 )
 
 type HttpContent struct {

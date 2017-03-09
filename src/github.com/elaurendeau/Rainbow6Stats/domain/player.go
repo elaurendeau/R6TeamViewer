@@ -2,6 +2,7 @@ package domain
 
 import "time"
 
+//Player struct represent the statistic for a specific player
 type Player struct {
 	Player struct {
 		Username  string    `json:"username"`
@@ -51,6 +52,8 @@ type Player struct {
 	} `json:"player"`
 }
 
+//PlayerRepository describe the methodes used for the player repository
 type PlayerRepository interface {
+	//FindByProfileNameAndPlatform is used to retrieve a struct of player
 	FindByProfileNameAndPlatform(profileName string, platform string) (*Player, error)
 }

@@ -1,5 +1,9 @@
 package domain
 
+import "fmt"
+
+//Operators is a struct used to describe an operator
+//It should contain the records of all operators.
 type Operators struct {
 	OperatorRecords []struct {
 		Stats struct {
@@ -27,6 +31,8 @@ type Operators struct {
 	} `json:"operator_records"`
 }
 
+//OperatorRepository describe the methodes used for the operator repository
 type OperatorRepository interface {
+	//FindByProfileNameAndPlatform is used to retrieve a struct of operators
 	FindByProfileNameAndPlatform(profileName string, platform string) (*Operators, error)
 }

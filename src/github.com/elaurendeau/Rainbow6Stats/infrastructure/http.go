@@ -1,10 +1,10 @@
 package infrastructure
 
 import (
+	"github.com/elaurendeau/Rainbow6Stats/interfaces"
 	"io/ioutil"
 	"net/http"
 	"time"
-	"github.com/elaurendeau/Rainbow6Stats/interfaces"
 )
 
 type HttpHandler struct {

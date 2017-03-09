@@ -1,5 +1,6 @@
 package domain
 
+//Seasons structure represent the season statistics for a player
 type Seasons struct {
 	Seasons struct {
 		Num4 struct {
@@ -69,6 +70,8 @@ type Seasons struct {
 	} `json:"seasons"`
 }
 
+//OperatorRepository describe the methods used to retrieve the Season structure
 type SeasonRepository interface {
+	//FindByProfileNameAndPlatform is used to retrieve a struct of seasons
 	FindByProfileNameAndPlatform(profileName string, platform string) (*Seasons, error)
 }

@@ -2,11 +2,11 @@ package interfaces
 
 import (
 	"fmt"
+	"github.com/elaurendeau/Rainbow6Stats/domain"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"reflect"
 	"testing"
-	"github.com/elaurendeau/Rainbow6Stats/domain"
 )
 
 type MockedProfileInteractor struct {

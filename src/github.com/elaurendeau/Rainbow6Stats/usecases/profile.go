@@ -2,8 +2,8 @@ package usecases
 
 import (
 	"fmt"
-	"sync"
 	"github.com/elaurendeau/Rainbow6Stats/domain"
+	"sync"
 )
 
 type Logger interface {

@@ -4,12 +4,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/elaurendeau/Rainbow6Stats/domain"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"reflect"
 	"strings"
 	"testing"
-	"github.com/elaurendeau/Rainbow6Stats/domain"
 )
 
 type MockedRepositoryHttpHandler struct {
