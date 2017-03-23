@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+
+
 func main() {
 
 	start := time.Now()
@@ -61,5 +63,4 @@ func main() {
 	elapsed := time.Since(start)
 	fmt.Println("Total time ", elapsed)
 	fmt.Println("Average profile time ", elapsed/time.Duration(queryAmount))
-
 }

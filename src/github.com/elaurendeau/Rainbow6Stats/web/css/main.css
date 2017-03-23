@@ -1,0 +1,91 @@
+
+
+#content {
+    background-image: url("../img/background3.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-origin: border-box;
+    background-position: top;
+    box-sizing: border-box;
+
+    height: 100vh;
+
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+
+    color: white;
+
+}
+
+#header-content {
+    background-color: rgba(147, 112, 66, 0.2 );
+    height: 3vh;
+}
+
+#header-content > nav {
+    height: 100%;
+    box-sizing: border-box;
+    flex: auto;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+
+#pageHeaderMenu {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+#pageHeaderMenu > li {
+    margin: 0 5vw;
+}
+
+#pageHeaderMenu a {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: white;
+    text-shadow:
+            0.1rem  0.1rem 0.75rem rgba(103, 76, 34, 0.3),
+            0.1rem -0.1rem 0.75rem rgba(103, 76, 34, 0.3),
+            -0.1rem  0.1rem 0.75rem rgba(103, 76, 34, 0.3),
+            -0.1rem -0.1rem 0.75rem rgba(103, 76, 34, 0.3);
+}
+
+
+#main-content {
+    margin: 0 0 5% 0;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(147, 112, 66, 0.2);
+    height: 20%;
+    text-shadow:
+            0.5rem  0.5rem 2rem rgba(48, 31, 13, 0.5),
+            0.5rem -0.5rem 2rem rgba(48, 31, 13, 0.5),
+            -0.5rem  0.5rem 2rem rgba(48, 31, 13, 0.5),
+            -0.5rem -0.5rem 2rem rgba(48, 31, 13, 0.5);
+
+}
+
+
+#main-content > * {
+    font-family: 'Special Elite', cursive;
+}
+
+#main-content-title {
+    text-transform: uppercase;
+    font-size: 8vw;
+}
+
+#main-content > h2 {
+    font-size: 4vw;
+}
