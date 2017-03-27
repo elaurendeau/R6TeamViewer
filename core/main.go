@@ -2,13 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/elaurendeau/Rainbow6Stats/infrastructure"
-	"github.com/elaurendeau/Rainbow6Stats/interfaces"
-	"github.com/elaurendeau/Rainbow6Stats/usecases"
 	"time"
+	"github.com/elaurendeau/R6TeamViewer/core/infrastructure"
+	"github.com/elaurendeau/R6TeamViewer/core/interfaces"
+	"github.com/elaurendeau/R6TeamViewer/core/usecases"
 )
-
-
 
 func main() {
 

@@ -2,8 +2,8 @@ package usecases
 
 import (
 	"fmt"
-	"github.com/elaurendeau/Rainbow6Stats/domain"
 	"sync"
+	"github.com/elaurendeau/R6TeamViewer/core/domain"
 )
 
 //Logger interface for a simple logger

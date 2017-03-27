@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/elaurendeau/Rainbow6Stats/domain"
+	"github.com/elaurendeau/R6TeamViewer/core/domain"
 )
 
 //HttpHandler is the http interface used to get or post data
@@ -20,8 +20,10 @@ type HttpRepository struct {
 
 //SeasonRepository is just a facade for the season HttpRepository
 type SeasonRepository HttpRepository
+
 //PlayerRepository is just a facade for the player HttpRepository
 type PlayerRepository HttpRepository
+
 //OperatorRepository is just a facade for the operator HttpRepository
 type OperatorRepository HttpRepository
 
@@ -52,6 +54,7 @@ func (seasonRepository *SeasonRepository) FindByProfileNameAndPlatform(profileNa
 
 	return seasons, nil
 }
+
 //FindByProfileNameAndPlatform finds an instance of the operators for a specific profileName and platform
 func (operatorRepository *OperatorRepository) FindByProfileNameAndPlatform(profileName string, platform string) (*domain.Operators, error) {
 
@@ -70,6 +73,7 @@ func (operatorRepository *OperatorRepository) FindByProfileNameAndPlatform(profi
 
 	return operators, nil
 }
+
 //FindByProfileNameAndPlatform finds an instance of the player for a specific profileName and platform
 func (playerRepository *PlayerRepository) FindByProfileNameAndPlatform(profileName string, platform string) (*domain.Player, error) {
 

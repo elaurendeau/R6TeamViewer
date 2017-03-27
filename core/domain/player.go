@@ -10,7 +10,7 @@ type Player struct {
 		UbisoftID string    `json:"ubisoft_id"`
 		IndexedAt time.Time `json:"indexed_at"`
 		UpdatedAt time.Time `json:"updated_at"`
-		Stats     struct {
+		Stats struct {
 			Ranked struct {
 				HasPlayed bool    `json:"has_played"`
 				Wins      int     `json:"wins"`

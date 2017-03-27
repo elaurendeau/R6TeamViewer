@@ -1,10 +1,10 @@
 package infrastructure
 
 import (
-	"github.com/elaurendeau/Rainbow6Stats/interfaces"
 	"io/ioutil"
 	"net/http"
 	"time"
+	"github.com/elaurendeau/R6TeamViewer/core/interfaces"
 )
 
 //HttpHandler is a struct used to handle http requests
